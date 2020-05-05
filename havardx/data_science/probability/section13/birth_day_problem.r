@@ -11,7 +11,9 @@ num <- seq(1, 60)
 prob <- sapply(num, same_birthday_with_montecarlo)
 
 same_birthday_with_math <- function(num) {
-  1 - prod((seq(365, 365 - num + 1) / 365))
+  # `prod` means product all elements
+  prob_unique <- prod((seq(365, 365 - num + 1) / 365))
+  1 - prob_unique
 }
 
 eprob <- sapply(num, same_birthday_with_math)
