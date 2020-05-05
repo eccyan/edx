@@ -126,5 +126,6 @@ print(win4_2)
 # ++-+-+
 win4_3 <- comb(5, 3) * rate(1)
 
+# those are binomial probability: nCx⋅p^x⋅(1−p)^(n−x)
 p_10 <- win4_0 + win4_1 + win4_2 + win4_3
 print(p_10)
