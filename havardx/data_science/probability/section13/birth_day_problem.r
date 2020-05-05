@@ -19,5 +19,16 @@ same_birthday_with_math <- function(num) {
 eprob <- sapply(num, same_birthday_with_math)
 
 library(tidyverse)
-png("plot.png")
+png("mc_and_math.png")
 qplot(num, prob) + geom_line(aes(num, eprob), col = "red")
+
+# Check the stability
+
+num <- 10 ^ seq(1, 5, len = 100)
+prob <- sapply(num, function(b, num=25) {
+  # Replace `num` with `b` for sapply
+  same_birthday_with_montecarlo(num, b)
+})
+
+png("stability.png")
+qplot(log10(num), prob, geom = "line")
