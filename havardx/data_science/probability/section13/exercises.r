@@ -1,4 +1,5 @@
 library(gtools)
+library(tidyverse)
 
 # 1.
 
@@ -149,3 +150,20 @@ check_wins <- function(wins) {
 p_11 <- mean(replicate(10000, check_wins(wins())))
 
 print(p_11)
+
+# 12.
+
+prob_win <- function(p) {
+  B <- 10000
+  result <- replicate(B, {
+    b_win <- sample(c(1, 0), 7, replace = TRUE, prob = c(1 - p, p))
+    sum(b_win) >= 4
+  })
+  mean(result)
+}
+print(prob_win(1))
+
+p <- seq(0.5, 0.95, 0.025)
+Pr <- sapply(p, prob_win)
+png("exercise12.png")
+qplot(p, Pr)
