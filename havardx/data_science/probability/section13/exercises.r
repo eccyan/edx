@@ -129,3 +129,23 @@ win4_3 <- comb(5, 3) * rate(1)
 # those are binomial probability: nCx⋅p^x⋅(1−p)^(n−x)
 p_10 <- win4_0 + win4_1 + win4_2 + win4_3
 print(p_10)
+
+# 11.
+
+games <- c(2:7)
+cavs_winning_rate <- 0.5
+wins <- function () {
+  sample(c(0,1), length(games), replace = TRUE,
+    prob = c(cavs_winning_rate, 1 - cavs_winning_rate))
+}
+
+check_wins <- function(wins) {
+  win4_1 <- sum(wins[1:4]) >= 4
+  win4_2 <- sum(wins[1:4]) >= 3 & wins[5] == 1
+  win4_3 <- sum(wins[1:5]) >= 3 & wins[6] == 1
+  win4_1 | win4_2 | win4_3
+}
+
+p_11 <- mean(replicate(10000, check_wins(wins())))
+
+print(p_11)
