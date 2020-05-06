@@ -73,14 +73,14 @@ print(p_8)
 
 # 9.
 
-B_9 <- 100000
+b_9 <- 100000
 
-cavs_wins_least_one <- function () {
-  celtic_wins <- sample(c(0,1), length(games), replace = TRUE,
+cavs_wins_least_one <- function() {
+  celtic_wins <- sample(c(0, 1), length(games), replace = TRUE,
     prob = c(cavs_winning_rate, 1 - cavs_winning_rate))
   any(!celtic_wins)
 }
-tab <- table(replicate(B_9, cavs_wins_least_one()))
+tab <- table(replicate(b_9, cavs_wins_least_one()))
 p_9 <- prop.table(tab)["TRUE"]
 
 print(p_9)
@@ -135,8 +135,8 @@ print(p_10)
 
 games <- c(2:7)
 cavs_winning_rate <- 0.5
-wins <- function () {
-  sample(c(0,1), length(games), replace = TRUE,
+wins <- function() {
+  sample(c(0, 1), length(games), replace = TRUE,
     prob = c(cavs_winning_rate, 1 - cavs_winning_rate))
 }
 
@@ -154,8 +154,8 @@ print(p_11)
 # 12.
 
 prob_win <- function(p) {
-  B <- 10000
-  result <- replicate(B, {
+  b <- 10000
+  result <- replicate(b, {
     b_win <- sample(c(1, 0), 7, replace = TRUE, prob = c(1 - p, p))
     sum(b_win) >= 4
   })
@@ -164,6 +164,25 @@ prob_win <- function(p) {
 print(prob_win(1))
 
 p <- seq(0.5, 0.95, 0.025)
-Pr <- sapply(p, prob_win)
+pr <- sapply(p, prob_win)
 png("exercise12.png")
-qplot(p, Pr)
+qplot(p, pr)
+
+# 13.
+
+p <- 0.75
+game_count <- seq(1, 25, 2)
+prob_win <- function(num, p) {
+  b <- 10000
+  result <- replicate(b, {
+    b_win <- sample(c(1, 0), num, replace = TRUE, prob = c(1 - p, p))
+    sum(b_win) >= (num + 1) / 2
+  })
+  mean(result)
+}
+
+pr <- sapply(game_count, function(num) {
+  prob_win(num, p)
+})
+png("exercise13.png")
+qplot(game_count, pr)
